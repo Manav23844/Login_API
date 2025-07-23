@@ -13,12 +13,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ['email']
     
     def validate_email(self, value):
-        # Email format validation
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_pattern, value):
             raise serializers.ValidationError("Invalid email format.")
         
-        # Check for duplicates
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("User with this email already exists.")
         
