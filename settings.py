@@ -1,6 +1,6 @@
 import os
 from datetime import timedelta
-from pathlib import Path  # You forgot to import Path
+from pathlib import Path 
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
-    'authentication',  # your app
+    'authentication', 
 ]
 
 MIDDLEWARE = [
@@ -76,10 +76,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ Tell Django to use your custom User model
+
 AUTH_USER_MODEL = 'authentication.User'
 
-# REST Framework Configuration
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-# JWT Configuration
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -102,10 +102,9 @@ SIMPLE_JWT = {
     'SIGNING_KEY': config('JWT_SECRET_KEY', default=SECRET_KEY),
 }
 
-# Email Configuration (Mock)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# CORS Configuration
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
