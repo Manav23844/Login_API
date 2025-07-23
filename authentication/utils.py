@@ -21,7 +21,6 @@ class EmailService:
         If you didn't request this code, please ignore this email.
         """
         
-        # Mock email - print to console
         print(f"\n{'='*50}")
         print(f"📧 MOCK EMAIL SERVICE")
         print(f"{'='*50}")
@@ -37,14 +36,11 @@ class OTPService:
     @staticmethod
     def generate_and_send_otp(user):
         """Generate OTP and send via email"""
-        # Invalidate any existing OTPs
         OTP.objects.filter(user=user, is_used=False).update(is_used=True)
         
-        # Generate new OTP
         otp_code = OTP.generate_otp()
         otp = OTP.objects.create(user=user, code=otp_code)
         
-        # Send OTP via email
         EmailService.send_otp_email(user.email, otp_code)
         
         return otp
@@ -59,28 +55,23 @@ class OTPService:
                 is_used=False
             )
             
-            # Check if OTP is expired
             if otp.is_expired():
                 return False, "OTP has expired."
             
-            # Check attempt limit
             if otp.attempts >= settings.MAX_OTP_ATTEMPTS:
                 otp.is_used = True
                 otp.save()
                 return False, "Maximum OTP attempts exceeded."
             
-            # Mark OTP as used
             otp.is_used = True
             otp.save()
             
-            # Mark user email as verified
             user.is_email_verified = True
             user.save()
             
             return True, "OTP verified successfully."
             
         except OTP.DoesNotExist:
-            # Increment attempts for existing OTPs
             active_otps = OTP.objects.filter(user=user, is_used=False)
             for active_otp in active_otps:
                 active_otp.attempts += 1
