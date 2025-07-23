@@ -8,13 +8,12 @@ class RateLimitMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
         self.rate_limits = {
-            '/api/request-otp': {'requests': 5, 'window': 300},  # 5 requests per 5 minutes
-            '/api/verify-otp': {'requests': 10, 'window': 300},   # 10 requests per 5 minutes
-            '/api/register': {'requests': 3, 'window': 3600},     # 3 requests per hour
+            '/api/request-otp': {'requests': 5, 'window': 300},  
+            '/api/verify-otp': {'requests': 10, 'window': 300},  
+            '/api/register': {'requests': 3, 'window': 3600},    
         }
 
     def __call__(self, request):
-        # Check rate limits for specific endpoints
         if request.path in self.rate_limits:
             if not self.check_rate_limit(request):
                 return JsonResponse({
@@ -31,12 +30,10 @@ class RateLimitMiddleware:
         
         window_start = timezone.now() - timedelta(seconds=rate_limit['window'])
         
-        # Clean old logs
         RateLimitLog.objects.filter(
             window_start__lt=window_start
         ).delete()
         
-        # Get or create rate limit log
         log, created = RateLimitLog.objects.get_or_create(
             ip_address=ip_address,
             endpoint=endpoint,
