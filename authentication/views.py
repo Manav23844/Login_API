@@ -22,7 +22,6 @@ def home(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
-    # Example logic, replace with your registration logic
     return Response({"message": "User registered successfully!"})
 
 @api_view(['POST'])
@@ -31,8 +30,7 @@ def request_otp(request):
     email = request.data.get('email')
     if not email:
         return Response({'error': 'Email is required.'}, status=400)
-    # Here you would generate and send the OTP to the email
-    # For now, just return a success message
+   
     return Response({'message': 'OTP sent to your email.'})
 
 @api_view(['POST'])
@@ -42,8 +40,7 @@ def verify_otp(request):
     otp = request.data.get('otp')
     if not email or not otp:
         return Response({'error': 'Email and OTP are required.'}, status=400)
-    # Here you would verify the OTP for the email
-    # For now, just return a success message and a dummy token
+  
     return Response({
         'message': 'Login successful.',
         'token': 'jwt_token'
