@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import User, OTP, RateLimitLog
 
 
-# Custom UserAdmin to show extra fields
+
 class CustomUserAdmin(BaseUserAdmin):
     model = User
     list_display = ('email', 'username', 'is_email_verified', 'is_staff', 'is_active')
@@ -19,7 +19,7 @@ class CustomUserAdmin(BaseUserAdmin):
     ordering = ('email',)
 
 
-# Register all models
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(OTP)
 admin.site.register(RateLimitLog)
