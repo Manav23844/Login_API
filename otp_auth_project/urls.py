@@ -20,5 +20,5 @@ from authentication.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('authentication.urls')),  # <-- Use include here
+    path('', include('authentication.urls')),  
 ]
