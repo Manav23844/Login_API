@@ -110,6 +110,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-# Custom Settings
+
 OTP_EXPIRY_MINUTES = config('OTP_EXPIRY_MINUTES', default=5, cast=int)
 MAX_OTP_ATTEMPTS = config('MAX_OTP_ATTEMPTS', default=3, cast=int)
